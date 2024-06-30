@@ -1,4 +1,5 @@
-FRAMERATE=60
+FRAMERATE=30
+DEFAULT_OUTPUT=$(date -u +%F_%T).mp4
 
 clean()
 {
@@ -18,7 +19,7 @@ if [[ "$1" == "capture" ]]; then
 
     cps=${2:-3}
     full=${3:-full}
-    output=${4:-out.mp4}
+    output=${4:-$DEFAULT_OUTPUT}
 
     LC_NUMERIC=C
     waittime=$(awk "BEGIN { printf(\"%.4f\", (1 / $cps)) }")
@@ -44,7 +45,7 @@ elif [[ "$1" == "clean" ]]; then
     printf "Cleaning captures...\n"
     rm -rf _timelapse*.jpg
 elif [[ "$1" == "video" ]]; then
-    output=${2:-out.mp4}
+    output=${2:-$DEFAULT_OUTPUT}
     generate_video $output
 
     if [ $? -eq 0 ]; then
